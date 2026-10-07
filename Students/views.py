@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
+from  rest_framework.decorators import api_view
 
 class TaskView(APIView):
 
@@ -270,3 +271,65 @@ class RanksheetView(APIView):
                 "result" : student_result
             }
         )
+
+@api_view(['GET','POST'])
+def task_list_create(request):
+
+    if(request.method == "GET"):
+
+        all_task = Tast.objects.all()
+
+        task_data = Task_Serilizes(all_task,many = True).data
+
+        return Response(task_data)
+    
+    elif(request.method == "POST"):
+
+        new_task = Task_Serilizes(data = request.data)
+        
+        if(new_task.is_valid()):
+            new_task.save()
+    
+            return Response("New Task Added")
+        else:
+            return Response(new_task.errors)
+@api_view(['GET','PATCH','PUT','DELETE'])
+def task_update_delete(request,id):
+
+    task = Tast.objects.get(id = id )
+
+    if(request.method == "GET"):
+
+        task_data = Task_Serilizes(task).data
+
+        return Response(task_data)
+    
+    elif(request.method == "PATCH"):
+
+        update_task = Task_Serilizes(task,data = request.data, partial = True)
+
+        if(update_task.is_valid()):
+
+            update_task.save()
+    
+            return Response("Task updated")
+        else:
+            return Response(update_task.errors)
+        
+    elif(request.method == "PUT"):
+
+        update_task = Task_Serilizes(task,data = request.data, partial = True)
+
+        if(update_task.is_valid()):
+
+            update_task.save()
+    
+            return Response("Task updated")
+        else:
+            return Response(update_task.errors)
+        
+    elif(request.method == "DELETE"):
+
+        task.delete()
+
+        return Response ("Task Deleced")
