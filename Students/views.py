@@ -9,14 +9,14 @@ class StudentAPI(APIView):
     def get(self,request):
         all_students = Student.objects.all()
         student_data = Student_Task_Serializer(all_students,many=True).data
-        #student_list = []
-        #for s in all_students:
-         #   student_dict = {
-          #      'id':s.id,
-           #     'name':s.name,
-            #    'age':s.age
-            #}
-            #student_list.append(student_dict)
+        student_list = []
+        for s in all_students:
+            student_dict = {
+                'id':s.id,
+                'name':s.name,
+                'age':s.age
+            }
+            student_list.append(student_dict)
 
         return Response(student_data)
 
