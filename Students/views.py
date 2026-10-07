@@ -4,6 +4,46 @@ from .models import *
 from .serializers import *
 from  rest_framework.decorators import api_view
 
+
+class StudentAPI(APIView):
+    def get(self,request):
+        all_students = Student.objects.all()
+        student_data = Student_Task_Serializer(all_students,many=True).data
+        #student_list = []
+        #for s in all_students:
+         #   student_dict = {
+          #      'id':s.id,
+           #     'name':s.name,
+            #    'age':s.age
+            #}
+            #student_list.append(student_dict)
+
+        return Response(student_data)
+
+    def post(self,request):
+
+        new_student = Student(name = request.data['name'],age = request.data['age'])
+        new_student.save()
+    
+        return Response("New Student Created")
+
+    def put(self,request,student_id):
+
+        student_data = Student.objects.filter(id = student_id)
+
+        student_data.update(name = request.data['name'],age = request.data['age'])
+
+        return Response("Student Data Updated")
+
+    def delete(self,request,student_id):
+
+        student_data = Student.objects.get(id = student_id)
+        
+        student_data.delete()
+
+        return Response("Student Data Deleted")
+
+
 class TaskView(APIView):
 
     def get(self,request,task_id=None):
@@ -277,15 +317,15 @@ def task_list_create(request):
 
     if(request.method == "GET"):
 
-        all_task = Tast.objects.all()
+        all_task = Task.objects.all()
 
-        task_data = Task_Serilizes(all_task,many = True).data
+        task_data = Task_Serializers(all_task,many = True).data
 
         return Response(task_data)
     
     elif(request.method == "POST"):
 
-        new_task = Task_Serilizes(data = request.data)
+        new_task = Task_Serializers(data = request.data)
         
         if(new_task.is_valid()):
             new_task.save()
@@ -296,17 +336,17 @@ def task_list_create(request):
 @api_view(['GET','PATCH','PUT','DELETE'])
 def task_update_delete(request,id):
 
-    task = Tast.objects.get(id = id )
+    task = Task.objects.get(id = id )
 
     if(request.method == "GET"):
 
-        task_data = Task_Serilizes(task).data
+        task_data = Task_Serializers(task).data
 
         return Response(task_data)
     
     elif(request.method == "PATCH"):
 
-        update_task = Task_Serilizes(task,data = request.data, partial = True)
+        update_task = Task_Serializers(task,data = request.data, partial = True)
 
         if(update_task.is_valid()):
 
@@ -318,7 +358,7 @@ def task_update_delete(request,id):
         
     elif(request.method == "PUT"):
 
-        update_task = Task_Serilizes(task,data = request.data, partial = True)
+        update_task = Task_Serializers(task,data = request.data, partial = True)
 
         if(update_task.is_valid()):
 
