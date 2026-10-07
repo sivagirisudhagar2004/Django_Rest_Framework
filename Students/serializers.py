@@ -17,7 +17,6 @@ class RankSheet_Serilizes(ModelSerializer):
 
 class Student_Task_Serializer(ModelSerializer):
 
-
     all_task = Task_Serializers( many = True)
 
     class Meta:

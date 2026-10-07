@@ -59,14 +59,14 @@ class TaskView(APIView):
 
          all_task = Task.objects.all()
 
-         task_data = Task_Serializers(all_task, many=True).data
+         task_data = Task_Data_Serilizes(all_task, many=True).data #task_serilizer
 
          return Response(task_data)
         
         else:
             task = Task.objects.get(id = task_id)
 
-            task_data = Task_Serializers(task).data
+            task_data = Task_Data_Serilizes(task).data
 
             return Response(task_data)
 
