@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import Task
+from .models import *
 
 
 class Task_Serializers(ModelSerializer):
@@ -8,3 +8,8 @@ class Task_Serializers(ModelSerializer):
 
         model = Task
         fields = "__all__"
+
+class RankSheet_Serilizes(ModelSerializer):
+    class Meta:
+        model = RankSheet
+        fields = '__all__'
