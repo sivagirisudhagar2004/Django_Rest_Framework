@@ -67,3 +67,206 @@ class TaskView(APIView):
         task.delete()
 
         return Response("Task Deleted")
+
+class RanksheetView(APIView):
+
+    def get(self,request,id = None):
+
+        if (id == None):
+
+            all_rank = RankSheet.objects.all()
+
+            rank_data = RankSheet_Serilizes(all_rank, many = True).data
+
+            return Response(rank_data)
+        else:
+            rank = RankSheet.objects.get( id = id)
+
+            rank_data = RankSheet_Serilizes(rank).data
+
+            return Response(rank_data)
+
+    def post(self,request):
+
+        total_marks  =  request.data['tamil'] + request.data['english'] + request.data['maths'] + request.data['science'] + request.data['social_science']
+        
+
+        average_marks = total_marks / 5
+
+        if((request.data['tamil'] >= 35) and (request.data['english'] >= 35) and (request.data['maths'] >= 35)and
+           (request.data['science'] >= 35) and (request.data['social_science'] >= 35)):
+
+            student_result = True
+
+        else:
+            student_result = False
+
+
+        new_marks = RankSheet(tamil = request.data['tamil'], english = request.data['english'],
+        maths = request.data['maths'],science = request.data['science'],social_science = request.data['social_science'],
+        total = total_marks, average = average_marks, result = student_result)
+
+        new_marks.save()
+
+        return Response(
+            {
+                "message":"Marks Saved",
+                "total" : total_marks,
+                "average" :average_marks,
+                "result" : student_result
+            }
+        )
+    
+    def patch(self,request,id):
+        try:
+            student = RankSheet.objects.get(id = id)
+        except RankSheet.DoesNotExist:
+            return Response({'error':'Student not found'},status=404)
+        if('tamil' in request.data):
+            student.tamil = request.data['tamil']
+        if('english' in request.data):
+            student.english = request.data['english']
+        if('maths' in request.data):
+            student.maths = request.data['maths']
+        if('science' in request.data):
+            student.science = request.data['science']
+        if('social_science' in request.data):
+            student.social_science = request.data['social_science']
+        student.total = (
+            student.tamil + student.english + student.maths + student.science + student.social_science
+        )
+        student.average = student.total/5
+
+        if(
+            student.tamil >= 35 and
+            student.english >= 35 and
+            student.maths >= 35 and
+            student.science >= 35 and
+            student.social_science >= 35
+            
+         ):
+            student.result = True
+        else:
+            student.result = False
+
+        student.save()
+        return Response({
+                "message":"Marks Saved",
+                "total" : student.total,
+                "average" :student.average,
+                "result" : student.result
+        })
+
+    def put(self,request,id):
+        try:
+            student = RankSheet.objects.get(id = id)
+        except RankSheet.DoesNotExist:
+            return Response({'error':'Student not found'},status=404)
+        if('tamil' in request.data):
+            student.tamil = request.data['tamil']
+        if('english' in request.data):
+            student.english = request.data['english']
+        if('maths' in request.data):
+            student.maths = request.data['maths']
+        if('science' in request.data):
+            student.science = request.data['science']
+        if('social_science' in request.data):
+            student.social_science = request.data['social_science']
+        student.total = (
+            student.tamil + student.english + student.maths + student.science + student.social_science
+        )
+        student.average = student.total/5
+
+        if(
+            student.tamil >= 35 and
+            student.english >= 35 and
+            student.maths >= 35 and
+            student.science >= 35 and
+            student.social_science >= 35
+            
+         ):
+            student.result = True
+        else:
+            student.result = False
+
+        student.save()
+        return Response({
+                "message":"Marks Saved",
+                "total" : student.total,
+                "average" :student.average,
+                "result" : student.result
+        })
+    
+    def delete(self,request,id):
+
+        marks = RankSheet.objects.get(id = id)
+
+        marks.delete()
+
+        return Response ("Marks Deleted")
+
+    def patch(self,request,id):
+
+        rank_data = RankSheet.objects.filter(id = id)
+
+        total_marks  =  request.data['tamil'] + request.data['english'] + request.data['maths'] + request.data['science'] + request.data['social_science']
+        
+
+        average_marks = total_marks / 5
+
+        if((request.data['tamil'] >= 35) and (request.data['english'] >= 35) and (request.data['maths'] >= 35)and
+           (request.data['science'] >= 35) and (request.data['social_science'] >= 35)):
+
+            student_result = True
+
+        else:
+            student_result = False
+
+
+        rank_data.update(tamil = request.data['tamil'], english = request.data['english'],
+        maths = request.data['maths'],science = request.data['science'],social_science = request.data['social_science'],
+        total = total_marks, average = average_marks, result = student_result)
+
+        rank_data.save()
+
+        return Response(
+            {
+                "message":"Marks Saved",
+                "total" : total_marks,
+                "average" :average_marks,
+                "result" : student_result
+            }
+        )
+
+    def put(self,request,id):
+
+        rank_data = RankSheet.objects.filter(id = id)
+
+        total_marks  =  request.data['tamil'] + request.data['english'] + request.data['maths'] + request.data['science'] + request.data['social_science']
+        
+
+        average_marks = total_marks / 5
+
+        if((request.data['tamil'] >= 35) and (request.data['english'] >= 35) and (request.data['maths'] >= 35)and
+           (request.data['science'] >= 35) and (request.data['social_science'] >= 35)):
+
+            student_result = True
+
+        else:
+            student_result = False
+
+
+        rank_data.update(tamil = request.data['tamil'], english = request.data['english'],
+        maths = request.data['maths'],science = request.data['science'],social_science = request.data['social_science'],
+        total = total_marks, average = average_marks, result = student_result)
+
+        rank_data.save()
+
+        return Response(
+            {
+                "message":"Marks Saved",
+                "total" : total_marks,
+                "average" :average_marks,
+                "result" : student_result
+            }
+        )
