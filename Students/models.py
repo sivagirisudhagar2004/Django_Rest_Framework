@@ -2,6 +2,13 @@ from django.db import models
 
 # Create your models here.
 
+class Student(models.Model):
+    name = models.CharField(max_length=150)
+    age = models.IntegerField(default=0)
+
+    def __str__(self):
+       return self.name
+
 class Task(models.Model):
     task_name = models.CharField(max_length=200)
     description = models.TextField()
