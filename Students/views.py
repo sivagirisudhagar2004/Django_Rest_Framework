@@ -9,16 +9,16 @@ class StudentAPI(APIView):
     def get(self,request):
         all_students = Student.objects.all()
         student_data = Student_Task_Serializer(all_students,many=True).data
-        student_list = []
-        for s in all_students:
-            student_dict = {
-                'id':s.id,
-                'name':s.name,
-                'age':s.age
-            }
-            student_list.append(student_dict)
+        #student_list = []
+        #for s in all_students:
+         #   student_dict = {
+          #      'id':s.id,
+           #     'name':s.name,
+           #     'age':s.age
+            #}
+            #student_list.append(student_dict)
 
-        return Response(student_data)
+        return Response(student_data) #student_list
 
     def post(self,request):
 
@@ -28,6 +28,14 @@ class StudentAPI(APIView):
         return Response("New Student Created")
 
     def put(self,request,student_id):
+
+        student_data = Student.objects.filter(id = student_id)
+
+        student_data.update(name = request.data['name'],age = request.data['age'])
+
+        return Response("Student Data Updated")
+
+    def patch(self,request,student_id):
 
         student_data = Student.objects.filter(id = student_id)
 
