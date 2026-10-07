@@ -43,7 +43,6 @@ class StudentAPI(APIView):
 
         return Response("Student Data Deleted")
 
-
 class TaskView(APIView):
 
     def get(self,request,task_id=None):
@@ -65,13 +64,19 @@ class TaskView(APIView):
 
     def post(self,request):
 
-        new_task = Task_Serializers(data = request.data)
+        new_task = Task(student_reference_id = request.data['student_reference'],task_name = request.data['task_name'],description = request.data['description'])
 
-        if(new_task.is_valid()):
-            new_task.save()
-            return Response("New Task Added")
-        else:
-            return Response(new_task.errors)
+        new_task.save()
+
+        return Response("Task Created")
+
+        #new_task = Task_Serializers(data = request.data)
+
+        #if(new_task.is_valid()):
+         #   new_task.save()
+          #  return Response("New Task Added")
+        #else:
+         #   return Response(new_task.errors)
     
     def patch(self,request,task_id):
 
