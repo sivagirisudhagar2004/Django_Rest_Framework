@@ -62,6 +62,10 @@ class TaskView(APIView):
 
         if(task_id == None):
 
+         person_name = config('name')
+
+         print(person_name)
+
          all_task = Task.objects.all()
 
          task_data = Task_Data_Serilizes(all_task, many=True).data #task_serilizer
