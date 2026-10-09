@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'Students',
-    'Library'
+    'Library',
+    'Authentiacation',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +84,17 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+   # 'default':{
+    #    'ENGINE': 'django.db.backends.mysql',
+     #   'NAME' : config('database'),
+      #  'USER' : config('user'),
+       # 'PASSWORD':config('password'),
+        #'HOST' : 'localhost', # http://127.0.0.1:8000/
+        #'POST' : '3306'
+   # }
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.1/ref/settings/#auth-password-validators
@@ -118,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
 
 
 # Email
