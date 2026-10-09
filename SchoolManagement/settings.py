@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'Students',
     'Library',
-    'Authentiacation',
+    'Authentication',
 
 ]
 
@@ -143,4 +143,4 @@ MAILERS = {
     },
 }
 
-AUTOR_USER_MODEL = "Authentication.User"
+AUTH_USER_MODEL = "Authentication.User"
