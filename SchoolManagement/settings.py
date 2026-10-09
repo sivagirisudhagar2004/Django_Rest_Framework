@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'Students',
     'Library',
     'Authentiacation',
-    'rest_framework_simplejwt',
+
 ]
 
 MIDDLEWARE = [
