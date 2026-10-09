@@ -11,9 +11,9 @@ class UserView(APIView):
 
     def post(self,request):
 
-        new_user = User(username = request.data['name'],is_superuser = request.data['is_superuser'])
+        new_user = User(username = request.data['username'],is_superuser = request.data['is_superuser'])
 
-        new_user.set_password(password = request.data['password'])
+        new_user.set_password(request.data['password'])
 
         new_user.save()
 
@@ -23,15 +23,15 @@ class UserLoginView(APIView):
 
     def post(self,request):
 
-        user_Authentication = authenticate(username = request.data['username'] )
+        user_Authentication = authenticate(username = request.data['username'],password = request.data['password'] )
 
-        print(user_Authentication.date_joined)
+        #print(user_Authentication.username)
 
         if(user_Authentication == None):
 
-            return Response( "User and Password  is Unvaild , Please Try again..!! ")
+            return Response( "User and Password  is Unvaild , Please Try again..!! ",status=502)
         else:
 
-            return Response(" Valid User..!!")
+            return Response(" Valid User..!!",status=200)
 
  
