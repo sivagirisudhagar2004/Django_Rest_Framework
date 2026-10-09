@@ -3,9 +3,14 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 from  rest_framework.decorators import api_view
+from decouple import config
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
 
 class StudentAPI(APIView):
+
+    permission_classes = [IsAuthenticated]
     def get(self,request):
         all_students = Student.objects.all()
         student_data = Student_Task_Serializer(all_students,many=True).data
