@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Students',
     'Library',
     'Authentication',
+    'rest_fremework_simplejwt'
 
 ]
 
