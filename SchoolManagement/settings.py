@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'Students',
     'Library',
     'Authentication',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'corsheaders'
 
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -160,3 +162,13 @@ SIMPLE_JWT = {
    # 'ROTATE_REFRESH_TOKENS' : True,
     #'BLACKIST_AFTER_ROTATION': True
 }
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://127.0.0.1:9000",
+    "http://127.0.0.1:5500"
+]
