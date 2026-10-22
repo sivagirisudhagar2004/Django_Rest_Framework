@@ -171,5 +171,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://127.0.0.1:9000",
     "http://127.0.0.1:5500",
-    "http://lcoalhost:5500"
+    "http://lcoalhost:5500",
+    "http://lcoalhost:5173",
+    "http://lcoalhost:3000",
+
+
+
 ]
